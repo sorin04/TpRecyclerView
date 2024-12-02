@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.michael.rv_2024.databinding.ActivityMainBinding
 import com.michael.rv_2024.fragment.Main
 import com.michael.rv_2024.models.DataViewModel
+import com.michael.rv_2024.models.DataViewModelDetail
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var viewmodelPartage: DataViewModel
+    lateinit var viewmodelPartageDetails: DataViewModelDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         viewmodelPartage = ViewModelProvider(this).get(DataViewModel::class.java)
         remplaceFragment(binding.fragmentContainer, Main())
+        viewmodelPartageDetails=ViewModelProvider(this).get(DataViewModelDetail::class.java)
+
+
 
 
     }

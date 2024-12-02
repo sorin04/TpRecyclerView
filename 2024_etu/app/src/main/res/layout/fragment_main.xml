@@ -14,6 +14,6 @@
                 android:textSize="24sp" android:textColor="#0737E3"/>
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/rvEtudiants"/>
+                android:layout_height="match_parent" android:id="@+id/rvEtudiants" android:clickable="true"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

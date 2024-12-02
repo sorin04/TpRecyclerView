@@ -7,7 +7,7 @@ import com.michael.rv_2024.databinding.ItemEtudiantBinding
 import com.michael.rv_2024.models.Etudiant
 import kotlinx.coroutines.NonDisposableHandle.parent
 
-class MyAdapter(private val lesEtudiants:ArrayList<Etudiant>):RecyclerView.Adapter<MyHolder>()       {
+class MyAdapter(private val lesEtudiants:ArrayList<Etudiant>,private val onItemClick:(Etudiant) -> Unit,):RecyclerView.Adapter<MyHolder>()       {
     private lateinit var binding: ItemEtudiantBinding
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyHolder {
         val binding=ItemEtudiantBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -21,6 +21,9 @@ class MyAdapter(private val lesEtudiants:ArrayList<Etudiant>):RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
         holder.bind(lesEtudiants.get(position))
+        holder.itemView.setOnClickListener{
+            onItemClick(lesEtudiants.get(position))
+        }
 
 
     }

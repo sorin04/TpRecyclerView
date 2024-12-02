@@ -12,6 +12,7 @@ import com.michael.rv_2024.MainActivity
 import com.michael.rv_2024.R
 import com.michael.rv_2024.databinding.FragmentMainBinding
 import com.michael.rv_2024.models.DataViewModel
+import com.michael.rv_2024.models.DataViewModelDetail
 import com.michael.rv_2024.recyclerview.MyAdapter
 import com.michael.rv_2024.retrofit.ApiAdapteur
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +22,13 @@ import kotlinx.coroutines.launch
 class Main:Fragment(R.layout.fragment_main  )    {
     private lateinit var binding : FragmentMainBinding
     private lateinit var viewmodelPartage: DataViewModel
+    private lateinit var viewmodelPartageDetails: DataViewModelDetail
 
 
 
     override fun onCreateView(inflater: LayoutInflater, container:ViewGroup?,saveInstanceState: Bundle?) :View?{
         viewmodelPartage=ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
+        viewmodelPartageDetails=ViewModelProvider(requireActivity()).get(DataViewModelDetail::class.java)
         binding = FragmentMainBinding.inflate(inflater,container,false)
         miseAJour()
         return binding.root
@@ -37,13 +40,20 @@ class Main:Fragment(R.layout.fragment_main  )    {
             val response=ApiAdapteur.apiClient.getTousLesEtudiantsEtudiants()
             if (response.isSuccessful){
                 response.body()?.let { arEtudiants ->viewmodelPartage.updateData(arEtudiants) }
-                binding.rvEtudiants.adapter=MyAdapter(viewmodelPartage.data.value!!)
+                binding.rvEtudiants.adapter=MyAdapter(viewmodelPartage.data.value!!){
+                    viewmodelPartageDetails.updateData(it)
+                    afficherDetails()
+                }
                 binding.rvEtudiants.layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
             }
         }
     }
 
-
+    private fun afficherDetails() {
+      parentFragmentManager.beginTransaction().replace(R.id.fragmentContainer, DetailEtudiant())
+        .addToBackStack(null)
+        .commit()
+    }
 
 
 }
